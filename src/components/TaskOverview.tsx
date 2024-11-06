@@ -2,8 +2,24 @@ import React from 'react';
 import TaskCard from './TaskCard';
 import NewTaskModal from './NewTask';
 import { AdjustmentsIcon } from '@heroicons/react/outline';
+import { fetchTodo } from '@/api/fetchTodo';
+import {  useQuery } from '@tanstack/react-query';
 
 const TaskOverview: React.FC = () => {
+  const {data, isLoading, isError} = useQuery({queryKey: ['todo'], queryFn: fetchTodo});
+
+  if (isLoading) {
+    return <div>Loading tasks...</div>;
+  }
+
+  if (isError) {
+    return <div>Failed to load tasks.</div>;
+  }
+  const allTasks= data.todos
+  console.log(allTasks)
+  
+
+  
   return (
     <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
     
@@ -27,10 +43,10 @@ const TaskOverview: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <TaskCard status="To do" title="Footer Design" subtext="Landing Page UI" comments={3} />
-        <TaskCard status="Completed" title="Header Design" subtext="Landing Page UI" comments={0} />
-        <TaskCard status="In Progress" title="New Landing Project" subtext="Landing Page UI" comments={8} />
-        <TaskCard status="Completed" title="Team Section" subtext="Landing Page UI" comments={3} />
+        {allTasks.map((task:any) =>{
+          return <TaskCard status={task.completed} title={task.todo} subtext={task.subtext} comments={0} />
+        })}
+       
       </div>
     </div>
   );

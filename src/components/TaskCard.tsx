@@ -11,16 +11,17 @@ interface TaskCardProps {
 const TaskCard: React.FC<TaskCardProps> = ({ status, title, subtext, comments }) => {
 
     const statusColor =
-    status === 'To do'
-      ? 'text-yellow-500 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-900'
-      : status === 'In Progress'
-      ? 'text-blue-500 bg-blue-100 dark:text-blue-400 dark:bg-blue-900'
-      : 'text-green-500 bg-green-100 dark:text-green-400 dark:bg-green-900';
+    status
+      ? 'text-green-500 bg-green-100 dark:text-green-400 dark:bg-green-900':
+      'text-yellow-500 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-900'
+      // :
+      // ? 'text-blue-500 bg-blue-100 dark:text-blue-400 dark:bg-blue-900'
+      // : 'text-green-500 bg-green-100 dark:text-green-400 dark:bg-green-900';
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-4 transition duration-300 ease-in-out">
       <span className={`text-sm font-semibold p-1 ${statusColor} rounded-sm`}>
-        {status}
+        {status? "Completed": "In Progress"}
       </span>
       <h3 className="font-bold text-lg mt-2 text-gray-800 dark:text-gray-100">{title}</h3>
       <p className="text-sm text-gray-500 dark:text-gray-400">{subtext}</p>
